@@ -1,0 +1,10 @@
+{
+  "editor.fontSize": 20,
+  "terminal.integrated.fontSize": 16
+
+  ,
+  "window.zoomLevel": 1,
+  "code-runner.executorMap": {
+    "typescript": "clear && npx ts-node --files --transpile-only",
+  }
+}
