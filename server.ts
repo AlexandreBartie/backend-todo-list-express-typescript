@@ -14,7 +14,7 @@ const port = process.env.PORT;
 //
 // Create a default route
 app.get('/', (req: Request, res: Response) => {
-    res.send('Express + TypeScript Server v#0.0.1');
+    res.send('Express + TypeScript Server v#0.0.2');
 })
 
 //
