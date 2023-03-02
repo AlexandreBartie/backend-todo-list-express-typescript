@@ -1,8 +1,6 @@
 {
-  "editor.fontSize": 20,
-  "terminal.integrated.fontSize": 16
-
-  ,
+  "editor.fontSize": 16,
+  "terminal.integrated.fontSize": 14,
   "window.zoomLevel": 1,
   "code-runner.executorMap": {
     "typescript": "clear && npx ts-node --files --transpile-only",
