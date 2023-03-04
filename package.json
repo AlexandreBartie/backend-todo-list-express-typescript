@@ -9,13 +9,16 @@
     "start": "node ./dist/server.js",
     "dockerUP": "docker compose up",
     "dockerDOWN": "docker compose down",
-    "dockerMySQL":  "docker exec -it mysql-todo-list mysql -u root -p",
-    "dockerList":  "docker ps -a"
+    "dockerMySQL": "docker exec -it mysql-todo-list mysql -u root -p",
+    "dockerList": "docker ps -a"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/cors": "^2.8.13",
+    "body-parse": "^0.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mysql2": "^3.1.2",

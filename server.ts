@@ -1,12 +1,23 @@
 import express, { Request, Response } from 'express'
 
-import dotenv from 'dotenv'
 import { DataSource } from 'typeorm'
+import dotenv from 'dotenv'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+
 
 //
 // Instantiate exppress app
 const app = express()
 dotenv.config()
+
+//
+// Parse request Body
+app.use(bodyParser.json())
+
+//
+// Use CORS install types as well
+app.use(cors())
 
 //
 // Create DatabaseConnection
