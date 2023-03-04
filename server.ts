@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
+import { Task } from './src/tasks/tasks.entity'
+
 
 //
 // Instantiate exppress app
@@ -28,8 +30,13 @@ export const AppDataSource = new DataSource({
   username: process.env.MYSQL_USER,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DB,
+  entities: [Task],
   synchronize: false,
 })
+
+console.log(process.env.MYSQL_USER)
+console.log(process.env.MYSQL_PASSWORD)
+console.log(process.env.MYSQL_DB)
 
 //
 // Define server port

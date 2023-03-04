@@ -15,8 +15,8 @@ services:
     ports:
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: todo-list
-      MYSQL_USER: root
-      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: senha
+      MYSQL_DATABASE: EventSales
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: senha
       TZ: America/Sao_Paulo
