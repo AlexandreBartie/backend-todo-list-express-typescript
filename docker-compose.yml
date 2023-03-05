@@ -1,22 +1,18 @@
 version: "3"
 services: 
-  mysql-todo-list:
-    container_name: mysql-todo-list
-    hostname: mysql-todo-list
+  db:
+    container_name: todo-app
+    hostname: todo-app
     image: mysql
     restart: always
-    command:
-      - --default-authentication-plugin=mysql_native_password
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-      - --innodb_force_recovery=0
-    volumes: 
-      - C:\DEVOPS\MYSQL\database\:/var/lib/mysql
-    ports:
+    ports: 
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: senha
-      MYSQL_DATABASE: EventSales
-      MYSQL_USER: usuario
-      MYSQL_PASSWORD: senha
-      TZ: America/Sao_Paulo
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_DATABASE: "Todo"
+      MYSQL_ROOT_PASSWORD: "admin"
+    volumes: 
+      - todoDB:/var/lib/mysql
+volumes:
+  todoDB: 
