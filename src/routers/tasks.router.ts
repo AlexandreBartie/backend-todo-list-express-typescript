@@ -7,5 +7,11 @@ export const tasksRouter: Router = Router()
 
 tasksRouter.get('/tasks', async (req: Request, res: Response) => {
   const tasks = new TasksController()
-  res.json(await tasks.getAll()).status(200)
+  const all = await tasks.getAll()
+  res.send(all).status(200)
   })
+
+  tasksRouter.post('/tasks', async (req: Request, res: Response) => {
+    const tasks = new TasksController()
+    res.json(await tasks.getAll()).status(200)
+    })

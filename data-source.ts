@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
+// import { SnakeCaseNamingStrategy } from 'typeorm-naming-strategies';
 import { Task } from './src/entity/tasks.entity'
 
 export const AppDataSource = new DataSource({
@@ -9,6 +10,7 @@ export const AppDataSource = new DataSource({
   username: 'user',
   password: 'password',
   database: 'Todo',
+  // namingStrategy: new SnakeCaseNamingStrategy(),
   synchronize: true,
   logging: false,
   entities: [Task],
@@ -16,6 +18,3 @@ export const AppDataSource = new DataSource({
   subscribers: [],
 })
 
-console.log(process.env.MYSQL_USER)
-console.log(process.env.MYSQL_PASSWORD)
-console.log(process.env.MYSQL_DB)

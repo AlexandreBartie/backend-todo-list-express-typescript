@@ -2,9 +2,9 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm'
 import { Priority } from '../enums/Priority'
 import { Status } from '../enums/Status'
 
-@Entity()
+@Entity('Task')
 export class Task {
-  @PrimaryGeneratedColumn('uuid', { })
+  @PrimaryGeneratedColumn('increment')
   id: string
 
   @Column({
@@ -19,9 +19,25 @@ export class Task {
   description: string
 
   @Column({
-    type: 'string',
+    type: 'varchar',
+    length: 20,
+    default: "here",
   })
-  date: string
+  matuzo: string
+
+  @Column({
+    type: 'varchar',
+    length: 30,
+    nullable: true,
+  })
+  norrr: string
+
+  @Column({
+    type: 'varchar',
+    length: 30,
+    default: "nothing",
+  })
+  reason: string
 
   @Column({
     type: 'enum',
