@@ -4,37 +4,36 @@ import { Status } from '../enums/Status'
 
 @Entity()
 export class Task {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('uuid', { })
   id: string
 
   @Column({
     type: 'varchar',
-    length: 255
+    length: 255,
   })
   title: string
 
   @Column({
-    type: 'longtext'
+    type: 'longtext',
   })
   description: string
 
   @Column({
-    type: 'date'
+    type: 'string',
   })
-  date: Date
+  date: string
 
   @Column({
     type: 'enum',
     enum: Priority,
-    default: Priority.normal
+    default: Priority.normal,
   })
   priority: Priority
 
   @Column({
     type: 'enum',
     enum: Status,
-    default: Status.todo
+    default: Status.todo,
   })
   status: Status
-
 }

@@ -20,6 +20,7 @@
   "dependencies": {
     "@types/cors": "^2.8.13",
     "body-parse": "^0.1.0",
+    "class-transformer": "^0.5.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
