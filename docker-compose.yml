@@ -1,8 +1,8 @@
 version: "3"
 services: 
   db:
-    container_name: todo-app
-    hostname: todo-app
+    container_name: todo-api
+    hostname: todo-api
     image: mysql
     restart: always
     ports: 
