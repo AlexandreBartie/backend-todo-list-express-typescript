@@ -19,6 +19,11 @@ export class Task {
   description: string
 
   @Column({
+    type: 'date'
+  })
+  date: Date
+
+  @Column({
     type: 'enum',
     enum: Priority,
     default: Priority.normal

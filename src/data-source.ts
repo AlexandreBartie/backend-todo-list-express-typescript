@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
-import { Task } from './task/task.entity'
+import { Task } from './entity/tasks.entity'
 
 export const AppDataSource = new DataSource({
   type: 'mysql',

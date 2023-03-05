@@ -6,8 +6,8 @@ import { DataSource } from 'typeorm'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
-import { Task } from './src/task/task.entity'
-import { taskRouter } from './src/task/task.router'
+import { Task } from './src/entity/tasks.entity'
+import { tasksRouter } from './src/routers/tasks.router'
 
 //
 // Instantiate exppress app
@@ -54,4 +54,4 @@ AppDataSource.initialize()
     console.error('Bad News: error during Data Source initialization ...', err)
   })
 
-app.use('/', taskRouter)
+app.use('/', tasksRouter)
