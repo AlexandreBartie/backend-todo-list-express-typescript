@@ -6,17 +6,19 @@ import { AppDataSource } from '../../data-source'
 import { Task } from '../entity/tasks.entity'
 
 class TasksController {
-  public async getId(req: Request, res: Response): Promise<Response> {
+  public async get(req: Request, res: Response): Promise<Response> {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array() })
     }
 
+    const { id } = req.params
+
     let task: Task | null
     try {
       task = await AppDataSource.getRepository(Task).findOne({
-        where: { id: req.body.id },
+        where: { id: id },
       })
     } catch (err) {
       return res
@@ -31,21 +33,8 @@ class TasksController {
         .json({ error: `This id task does not exist! -id: ${req.body.id}` })
   }
 
-  public async getAll(req: Request, res: Response): Promise<Response> {
-    try {
-      const all = await AppDataSource.getRepository(Task).find({
-        order: { date: 'ASC', id: 'ASC' },
-      })
-      return res.json(instanceToPlain(all)).status(200)
-    } catch (err) {
-      return res
-        .json({ title: 'Internal Server Error', error: err })
-        .status(500)
-    }
-  }
-
   // Method for the post route
-  public async create(req: Request, res: Response): Promise<Response> {
+  public async add(req: Request, res: Response): Promise<Response> {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
@@ -72,18 +61,20 @@ class TasksController {
   }
 
   // Method for the post route
-  public async update(req: Request, res: Response): Promise<Response> {
+  public async save(req: Request, res: Response): Promise<Response> {
     const errors = validationResult(req)
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ error: errors.array() })
     }
 
+    const { id } = req.params
+
     // try to find if the task exist
     let task: Task | null
     try {
       task = await AppDataSource.getRepository(Task).findOne({
-        where: { id: req.body.id },
+        where: { id: id },
       })
     } catch (err) {
       return res
@@ -94,14 +85,27 @@ class TasksController {
     if (!task)
       return res
         .status(404)
-        .json({ error: `This id task does not exist! -id: ${req.body.id}` })
+        .json({ error: `This id task does not exist! -id: ${id}` })
 
     try {
       const update = await AppDataSource.getRepository(Task).update(
-        req.body.id,
+        id,
         plainToInstance(Task, { status: req.body.status })
       )
       return res.json(instanceToPlain(update)).status(201)
+    } catch (err) {
+      return res
+        .json({ title: 'Internal Server Error', error: err })
+        .status(500)
+    }
+  }
+
+  public async getAll(req: Request, res: Response): Promise<Response> {
+    try {
+      const all = await AppDataSource.getRepository(Task).find({
+        order: { date: 'ASC', id: 'ASC' },
+      })
+      return res.json(instanceToPlain(all)).status(200)
     } catch (err) {
       return res
         .json({ title: 'Internal Server Error', error: err })

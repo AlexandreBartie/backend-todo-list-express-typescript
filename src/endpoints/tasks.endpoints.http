@@ -1,14 +1,10 @@
-### get all tasks
 
-GET http://localhost:3200/tasks
-Content-Type: application/json
-
-### add new task
-POST http://localhost:3200/tasks
+### add task new
+POST http://localhost:3200/task
 Content-Type: application/json
 
 {
-    "title": "Festa 10",
+    "title": "Festa 16",
     "date": "2023-10-27",
     "description":"Glamorosa",
     "priority": "normal",
@@ -16,10 +12,16 @@ Content-Type: application/json
     "reason":"I am so excited!"
 }
 
-### update status task
-PUT http://localhost:3200/tasks
+### get task by Id
+GET http://localhost:3200/task/11
+
+Content-Type: application/json
+### save task status
+PUT http://localhost:3200/task/23
 Content-Type: application/json
 {
-    "id": 10,
-    "status": "doing"
+    "status": "done"
 }
+### fetch tasks list
+GET http://localhost:3200/tasks
+Content-Type: application/json
