@@ -4,5 +4,31 @@
   "window.zoomLevel": 1,
   "code-runner.executorMap": {
     "typescript": "clear && npx ts-node --files --transpile-only",
-  }
+  },
+  "favorites.resources": [
+    {
+      "filePath": "packages\\app\\auto\\test\\TestStrategy\\3.componentLevel",
+      "group": "Default"
+    },
+    {
+      "filePath": "packages\\app\\auto\\e2e\\autotest",
+      "group": "Default"
+    },
+    {
+      "filePath": "packages\\app\\playwright.config.ts",
+      "group": "Default"
+    },
+    {
+      "filePath": "packages\\app\\auto\\e2e\\autoDEMO",
+      "group": "Default"
+    },
+    {
+      "filePath": "packages\\app\\auto\\src\\ATF\\Framework",
+      "group": "Default"
+    },
+    {
+      "filePath": "src",
+      "group": "Default"
+    }
+  ]
 }

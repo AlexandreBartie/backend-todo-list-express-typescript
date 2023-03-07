@@ -8,9 +8,7 @@ import bodyParser from 'body-parser'
 
 import { AppDataSource } from './data-source'
 
-// import { Task } from './src/entity/tasks.entity'
 import { tasksRouter } from './src/routers/tasks.router'
-import { Task } from './src/entity/tasks.entity'
 
 //
 // Instantiate exppress app
