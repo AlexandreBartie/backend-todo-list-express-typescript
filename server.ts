@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
-import { AppDataSource } from './data-source'
+import { AppDataSource } from './database'
 
 import { tasksRouter } from './src/routers/tasks.router'
 
