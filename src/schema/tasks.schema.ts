@@ -6,8 +6,7 @@ import { Status } from '../enums/Status'
 import { DBSchema, IdValidator } from '../database/databaseSchema'
 
 @Entity('Task')
-export class TaskDB extends DBSchema {
-
+export class TaskDTO extends DBSchema {
   @Column({
     type: 'varchar',
     length: 255,
@@ -18,6 +17,11 @@ export class TaskDB extends DBSchema {
     type: 'longtext',
   })
   description: string
+
+  @Column({
+    type: 'longtext',
+  })
+  reason: string
 
   @Column({
     type: 'date',

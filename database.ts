@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
-import { TaskDB } from './src/schema/tasks.schema'
+import { TaskDTO } from './src/schema/tasks.schema'
+
 
 export const AppDataSource = new DataSource({
   type: 'mysql',
@@ -11,7 +12,12 @@ export const AppDataSource = new DataSource({
   database: 'Todo',
   synchronize: true,
   logging: false,
-  entities: [TaskDB],
+  entities: [TaskDTO],
   migrations: [],
   subscribers: [],
 })
+
+
+
+
+

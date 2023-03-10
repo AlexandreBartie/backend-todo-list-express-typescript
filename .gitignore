@@ -2,5 +2,5 @@ node_modules
 dist
 database
 *.env
-test
+backup
 coverage
