@@ -5,9 +5,9 @@ import { TaskDTO } from '../schema/tasks.schema'
 import { EntityController } from './entity.controller'
 
 class TasksController extends EntityController<TaskDTO> {
-  // public async get(req: Request, res: Response): Promise<Response> {
-  //   return await super.get(req, res, AppDataSource.getRepository(TaskDTO))
-  // }
+  public async get(req: Request, res: Response): Promise<Response> {
+    return await super.get(req, res, AppDataSource.getRepository(TaskDTO))
+  }
 
   public async getAll(req: Request, res: Response): Promise<Response> {
     return super.getAll(req, res, AppDataSource.getRepository(TaskDTO), {

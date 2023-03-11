@@ -1,5 +1,10 @@
 import { Request, Response } from 'express'
-import { FindOptionsOrder, ObjectLiteral, Repository } from 'typeorm'
+import {
+  FindOneOptions,
+  FindOptionsOrder,
+  ObjectLiteral,
+  Repository,
+} from 'typeorm'
 import { instanceToPlain } from 'class-transformer'
 import { DBSchema } from '../database/databaseSchema'
 import { validationResult } from 'express-validator'
@@ -21,13 +26,6 @@ class BaseController extends DBSchema {
   //   else return this.setIdNotFound(res, req.body.id)
   // }
 
-  public setList(res: Response, list: unknown): Response {
-    return this.setItem(res, list, 200)
-  }
-
-  public setItem(res: Response, item: unknown, status: number): Response {
-    return res.json(instanceToPlain(item)).status(status)
-  }
   // protected newItem(item: unknown) {
   //   this.setItem(item, 201)
   // }
@@ -42,20 +40,30 @@ class BaseController extends DBSchema {
 }
 
 export class EntityController<T extends ObjectLiteral> extends BaseController {
-  // public async get(
-  //   req: Request,
-  //   res: Response,
-  //   repo: Repository<T>
-  // ): Promise<Response> {
-  //   if (this.setMethod(req, res, true)) {
-  //     try {
-  //       this.getItem(await repo.findOne(this.whereID()))
-  //     } catch (err) {
-  //       this.setInternalError(err)
-  //     }
-  //   }
-  //   return res
-  // }
+  public async get(
+    req: Request,
+    res: Response,
+    repo: Repository<T>
+  ): Promise<Response> {
+    //if (this.checkValidData(req, res)) {
+      try {
+        const id = req.body.id
+        const item = await repo.findOne({ where: { id: id } })
+        if (item) return res.json(instanceToPlain(item)).status(200)
+        else return res.json({ error: `This id #${id} not exist!` }).status(404)
+      } catch (err) {
+        return res
+          .json({ title: 'Internal Server Error', error: err })
+          .status(500)
+      }
+  //  }
+
+  }
+
+  public whereID(id: string): FindOneOptions<T> {
+    return { where: { id: id } } as unknown as FindOneOptions<T>
+  }
+
   public async getAll(
     req: Request,
     res: Response,
@@ -66,13 +74,12 @@ export class EntityController<T extends ObjectLiteral> extends BaseController {
       const list = await repo.find({ order: order })
       return res.json(instanceToPlain(list)).status(200)
     } catch (err) {
-      return res.json(this.setInternalError(err)).status(500)
+      return res
+        .json({ title: 'Internal Server Error', error: err })
+        .status(500)
     }
   }
 
-  private setInternalError(err: unknown): object {
-    return { title: 'Internal Server Error', error: err }
-  }
   // public async add(
   //   req: Request,
   //   res: Response,
@@ -104,9 +111,4 @@ export class EntityController<T extends ObjectLiteral> extends BaseController {
   //   }
   //   return res
   // }
-
 }
-
-// public whereID(): FindOneOptions<T> {
-//   return { where: { id: this.key } } as unknown as FindOneOptions<T>
-// }
