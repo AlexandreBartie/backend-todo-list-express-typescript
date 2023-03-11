@@ -19,11 +19,6 @@ export class TaskDTO extends DBSchema {
   description: string
 
   @Column({
-    type: 'longtext',
-  })
-  reason: string
-
-  @Column({
     type: 'date',
   })
   date: string

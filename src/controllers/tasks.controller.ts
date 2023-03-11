@@ -1,117 +1,45 @@
 import { Request, Response } from 'express'
-import { FindOptionsOrder, ObjectLiteral } from 'typeorm'
-import { instanceToPlain } from 'class-transformer'
+
 import { AppDataSource } from '../../database'
 import { TaskDTO } from '../schema/tasks.schema'
-// import { DBSchema } from '../database/databaseSchema'
-// import { DBRestAPI } from '../database/databaseRestAPI'
-
-class EntityController<T extends ObjectLiteral> {
-
-  public async get(req: Request, res: Response): Promise<Response> {
-  const errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ error: errors.array() })
-  }
-  const { id } = req.params
-  let task: Task | null
-  try {
-    task = await AppDataSource.getRepository(Task).findOne({
-      where: { id: id },
-    })
-  } catch (err) {
-    return res
-      .json({ title: 'Internal Server Error', error: err })
-      .status(500)
-  }
-  if (task) return res.json(instanceToPlain(task)).status(200)
-  else
-    return res
-      .status(404)
-      .json({ error: `This id task does not exist! -id: ${req.body.id}` })
-}
-
-  public async getAll(req: Request, res: Response, order: FindOptionsOrder<T>): Promise<Response> {
-
-    try {
-      const all = await AppDataSource.getRepository(TaskDTO).find({
-        order: order,
-      })
-      return res.json(instanceToPlain(all)).status(200)
-    } catch (err) {
-      return res
-        .json({ title: 'Internal Server Error', error: err })
-        .status(500)
-    }
-  }
-}
+import { EntityController } from './entity.controller'
 
 class TasksController extends EntityController<TaskDTO> {
-
-  public async getId(req: Request, res: Response): Promise<Response> {
-    return super.getId(req, res, { date: 'ASC', id: 'ASC' })
-  }
+  // public async get(req: Request, res: Response): Promise<Response> {
+  //   return await super.get(req, res, AppDataSource.getRepository(TaskDTO))
+  // }
 
   public async getAll(req: Request, res: Response): Promise<Response> {
-    return super.getAll(req, res, { date: 'ASC', id: 'ASC' })
+    return super.getAll(req, res, AppDataSource.getRepository(TaskDTO), {
+      date: 'ASC',
+      id: 'ASC',
+    })
   }
+
+
+  // public async add(req: Request, res: Response): Promise<Response> {
+  //   const item = new TaskDTO()
+  //   item.title = req.body.title
+  //   item.description = req.body.description
+  //   item.date = req.body.date
+  //   item.priority = req.body.priority
+  //   item.status = req.body.status
+  //   return await super.add(req, res, AppDataSource.getRepository(TaskDTO), item)
+  // }
+
+  // public async saveStatus(req: Request, res: Response): Promise<Response> {
+  //   if (await this.find(req, res)) {
+  //     const update = plainToInstance(TaskDTO, { status: req.body.status })
+  //     return super.save(req, res, AppDataSource.getRepository(TaskDTO), update)
+  //   } else return res
+  // }
+
 }
 
-// Method for the post route
-// public async add(req: Request, res: Response): Promise<Response> {
-//   const errors = validationResult(req)
-//   if (!errors.isEmpty()) {
-//     return res.status(400).json({ error: errors.array() })
-//   }
-//   const newItem = new Task()
-//   newItem.title = req.body.title
-//   newItem.description = req.body.description
-//   newItem.date = req.body.date
-//   newItem.priority = req.body.priority
-//   newItem.status = req.body.status
-//   try {
-//     const save = await AppDataSource.getRepository(Task).save(newItem)
-//     return res.json(instanceToPlain(save)).status(201)
-//   } catch (err) {
-//     return res
-//       .json({ title: 'Internal Server Error', error: err })
-//       .status(500)
-//   }
-// }
-// // Method for the post route
-// public async save(req: Request, res: Response): Promise<Response> {
-//   const errors = validationResult(req)
-//   if (!errors.isEmpty()) {
-//     return res.status(400).json({ error: errors.array() })
-//   }
-//   const { id } = req.params
-//   // try to find if the task exist
-//   let task: Task | null
-//   try {
-//     task = await AppDataSource.getRepository(Task).findOne({
-//       where: { id: id },
-//     })
-//   } catch (err) {
-//     return res
-//       .json({ title: 'Internal Server Error', error: err })
-//       .status(500)
-//   }
-//   if (!task)
-//     return res
-//       .status(404)
-//       .json({ error: `This id task does not exist! -id: ${id}` })
-//   try {
-//     const update = await AppDataSource.getRepository(Task).update(
-//       id,
-//       plainToInstance(Task, { status: req.body.status })
-//     )
-//     return res.json(instanceToPlain(update)).status(201)
-//   } catch (err) {
-//     return res
-//       .json({ title: 'Internal Server Error', error: err })
-//       .status(500)
-//   }
-// }
+// private async find(req: Request, res: Response): Promise<boolean> {
+//   await this.get(req, res)
+
+//   return true
 // }
 
 export const taskController = new TasksController()

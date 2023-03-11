@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ### get task by Id
-GET http://localhost:3200/task/11
+GET http://localhost:3200/task/10
 
 Content-Type: application/json
 ### save task status
