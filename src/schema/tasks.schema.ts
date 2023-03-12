@@ -3,10 +3,10 @@ import { body, ValidationChain } from 'express-validator'
 
 import { Priority } from '../enums/Priority'
 import { Status } from '../enums/Status'
-import { DBSchema, IdValidator } from '../database/databaseSchema'
+import { DBEntity, IdValidator } from '../database/databaseEntity'
 
 @Entity('Task')
-export class TaskDTO extends DBSchema {
+export class TaskDTO extends DBEntity {
   @Column({
     type: 'varchar',
     length: 255,

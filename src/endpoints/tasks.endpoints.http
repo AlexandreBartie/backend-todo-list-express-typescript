@@ -4,12 +4,11 @@ POST http://localhost:3200/task
 Content-Type: application/json
 
 {
-    "title": "Festa 16",
+    "title": "Festa Nova",
     "date": "2023-10-27",
     "description":"Glamorosa",
     "priority": "normal",
-    "status":"todo",
-    "reason":"I am so excited!"
+    "status":"todo"
 }
 
 ### get task by Id
