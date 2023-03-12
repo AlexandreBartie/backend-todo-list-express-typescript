@@ -78,7 +78,12 @@ export const taskAddValidator: ValidationChain[] = [
   taskStatusValidator,
 ]
 
-export const taskSaveValidator: ValidationChain[] = [
+export const taskSaveTitleValidator: ValidationChain[] = [
+  IdValidator,
+  taskTitleValidator,
+]
+
+export const taskSaveStatusValidator: ValidationChain[] = [
   IdValidator,
   taskStatusValidator,
 ]

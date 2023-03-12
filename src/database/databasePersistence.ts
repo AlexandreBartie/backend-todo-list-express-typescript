@@ -4,6 +4,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer'
 import { validationResult } from 'express-validator'
 import { DBEntity, PK_Entity } from './databaseEntity'
 import { TaskDTO } from '../schema/tasks.schema'
+import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity'
 
 export class DBPersistence<T extends ObjectLiteral> extends DBEntity {
   protected async get(
@@ -53,7 +54,7 @@ export class DBPersistence<T extends ObjectLiteral> extends DBEntity {
     req: Request,
     res: Response,
     repo: Repository<T>,
-    list: Partial
+    list: unknown
   ): Promise<Response> {
     const errors = validationResult(req)
     if (errors.isEmpty()) {
@@ -63,9 +64,9 @@ export class DBPersistence<T extends ObjectLiteral> extends DBEntity {
         const item = await repo.findOne(condition)
         if (!item) return res.json({ error: `This id #${id} not exist!` }).status(404)
 
-        // const data = plainToInstance(TaskDTO, list)
+        const data = plainToInstance(TaskDTO, list) as unknown as QueryDeepPartialEntity<T>
 
-        const update = await repo.update(id, list)
+        const update = await repo.update(id, data)
 
         return res.json(instanceToPlain(update)).status(201)
 

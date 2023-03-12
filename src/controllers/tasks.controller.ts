@@ -19,12 +19,19 @@ class TasksController extends DBPersistence<TaskDTO> {
     return await super.add(req, res, AppDataSource.getRepository(TaskDTO), item)
   }
 
-  // public async saveStatus(req: Request, res: Response): Promise<Response> {
-  //   if (await this.find(req, res)) {
-  //     const update = plainToInstance(TaskDTO, { status: req.body.status })
-  //     return super.save(req, res, AppDataSource.getRepository(TaskDTO), update)
-  //   } else return res
-  // }
+  public async saveTitle(req: Request, res: Response): Promise<Response> {
+    //if (await this.find(req, res)) {
+      // const update = plainToInstance(TaskDTO, )
+      return super.save(req, res, AppDataSource.getRepository(TaskDTO), { title: req.body.title })
+    // } else return res
+  }
+
+  public async saveStatus(req: Request, res: Response): Promise<Response> {
+    //if (await this.find(req, res)) {
+      // const update = plainToInstance(TaskDTO, )
+      return super.save(req, res, AppDataSource.getRepository(TaskDTO), { status: req.body.status })
+    // } else return res
+  }
 
   public async getAll(req: Request, res: Response): Promise<Response> {
     return super.getAll(req, res, AppDataSource.getRepository(TaskDTO), {

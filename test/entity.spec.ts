@@ -1,11 +1,11 @@
 import { describe, expect, test } from '@jest/globals'
-// import { TaskDTO } from '../src/schema/tasks.schema'
+import { TaskDTO } from '../src/schema/tasks.schema'
 
 describe('Database', () => {
   test('TaskDB', async () => {
-  //  const task = new TaskDTO()
+    const task = new TaskDTO()
 
-  //   const item = await task.get('10')
+     const item = await task.get('10')
 
   //   if (item) {
   //     console.log(task.title)

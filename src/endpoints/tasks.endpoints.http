@@ -4,19 +4,25 @@ POST http://localhost:3200/task
 Content-Type: application/json
 
 {
-    "title": "Festa Nova",
-    "date": "2023-10-27",
-    "description":"Glamorosa",
-    "priority": "normal",
+    "title": "Festa Incrivel",
+    "date": "2023-08-27",
+    "description":"Show",
+    "priority": "high",
     "status":"todo"
 }
 
 ### get task by Id
-GET http://localhost:3200/task/10
+GET http://localhost:3200/task/25
 
 Content-Type: application/json
+### save task title
+PUT http://localhost:3200/task/title/25
+Content-Type: application/json
+{
+    "title": "New Party"
+}
 ### save task status
-PUT http://localhost:3200/task/23
+PUT http://localhost:3200/task/status/25
 Content-Type: application/json
 {
     "status": "done"

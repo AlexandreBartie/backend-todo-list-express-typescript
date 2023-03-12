@@ -1,6 +1,5 @@
 node_modules
 dist
-database
 *.env
 backup
 coverage
