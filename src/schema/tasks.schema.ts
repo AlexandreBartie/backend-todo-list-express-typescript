@@ -3,10 +3,20 @@ import { body, ValidationChain } from 'express-validator'
 
 import { Priority } from '../enums/Priority'
 import { Status } from '../enums/Status'
-import { DBEntity, IdValidator } from '../database/databaseEntity'
+import { DBEntity } from '../database/databaseEntity'
+import { IdCheck } from '../database/databaseSchema'
 
 @Entity('Task')
 export class TaskDTO extends DBEntity {
+  constructor() {
+    super()
+    this.title = ''
+    this.description = ''
+    this.date = ''
+    this.priority = Priority.normal
+    this.status = Status.todo
+  }
+
   @Column({
     type: 'varchar',
     length: 255,
@@ -38,7 +48,21 @@ export class TaskDTO extends DBEntity {
   status: Status
 }
 
-const taskTitleValidator: ValidationChain = body('title')
+//
+// Check if attribute exist
+//
+// const taskTitleExist: ValidationChain = body('title').exists()
+
+// const taskDateExist: ValidationChain = body('date').exists()
+
+// const taskDescriptionExist: ValidationChain = body('description').exists()
+
+// const taskPriorityExist: ValidationChain = body('priority').exists()
+
+// const taskStatusExist: ValidationChain = body('status').exists()
+
+const taskTitleCheck: ValidationChain = body('title')
+  // .if(taskTitleExist)
   .not()
   .isEmpty()
   .withMessage('The task title is mandatory')
@@ -46,44 +70,38 @@ const taskTitleValidator: ValidationChain = body('title')
   .isString()
   .withMessage('The task title needs to be in text format')
 
-const taskDateValidator: ValidationChain = body('date')
+const taskDateCheck: ValidationChain = body('date')
+  // .if(taskDateExist)
   .not()
   .isEmpty()
   .withMessage('The task date is mandatory')
   .isDate({ format: 'yyyy-mm-dd' })
   .withMessage('The task date needs to be a valid date format')
 
-const taskDescriptionValidator: ValidationChain = body('description')
+const taskDescriptionCheck: ValidationChain = body('description')
+  // .if(taskDescriptionExist)
   .trim()
   .isString()
-  .withMessage('The task title needs to be in text format')
+  .withMessage('The task description needs to be in text format')
 
-const taskPriorityValidator: ValidationChain = body('priority')
+const taskPriorityCheck: ValidationChain = body('priority')
+  // .if(taskPriorityExist)
   .trim()
   .isIn([Priority.normal, Priority.high, Priority.low])
   .withMessage('The task priority needs to be in this list')
 
-const taskStatusValidator: ValidationChain = body('status')
+const taskStatusCheck: ValidationChain = body('status')
+  // .if(taskStatusExist)
   .trim()
   .isIn([Status.todo, Status.doing, Status.done])
   .withMessage('The task status needs to be in this list')
 
-export const taskGetValidator: ValidationChain[] = [IdValidator]
+export const taskGetCheck: ValidationChain[] = [IdCheck]
 
-export const taskAddValidator: ValidationChain[] = [
-  taskTitleValidator,
-  taskDescriptionValidator,
-  taskDateValidator,
-  taskPriorityValidator,
-  taskStatusValidator,
-]
-
-export const taskSaveTitleValidator: ValidationChain[] = [
-  IdValidator,
-  taskTitleValidator,
-]
-
-export const taskSaveStatusValidator: ValidationChain[] = [
-  IdValidator,
-  taskStatusValidator,
+export const taskDataCheck: ValidationChain[] = [
+  taskTitleCheck,
+  taskDescriptionCheck,
+  taskDateCheck,
+  taskPriorityCheck,
+  taskStatusCheck,
 ]

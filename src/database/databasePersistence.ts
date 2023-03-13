@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
-import { FindOneOptions, FindOptionsOrder, ObjectLiteral, Repository } from 'typeorm'
-import { instanceToPlain, plainToInstance } from 'class-transformer'
+import { FindOneOptions, FindOptionsOrder, Repository } from 'typeorm'
+import { instanceToPlain } from 'class-transformer'
 import { validationResult } from 'express-validator'
-import { DBEntity, PK_Entity } from './databaseEntity'
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity'
+import { DBEntity } from './databaseEntity'
 
-export class DBPersistence<T extends ObjectLiteral> extends DBEntity {
+export class DBPersistence<T extends DBEntity> {
   protected async get(
     req: Request,
     res: Response,
@@ -34,26 +34,32 @@ export class DBPersistence<T extends ObjectLiteral> extends DBEntity {
     repo: Repository<T>,
     item: T
   ): Promise<Response> {
-    const errors = validationResult(req)
-    if (errors.isEmpty()) {
-      try {
-        const save = await repo.save(item)
 
-        return res.json(instanceToPlain(save)).status(201)
-      } catch (err) {
-        return res
-          .json({ title: 'Internal Server Error', error: err })
-          .status(500)
+    const checkErrors = item.check(req.body)
+    if (checkErrors.length === 0)
+    {
+      const errors = validationResult(req)
+      if (errors.isEmpty()) {
+        try {
+          const save = await repo.save(item)
+  
+          return res.json(instanceToPlain(save)).status(201)
+        } catch (err) {
+          return res
+            .json({ title: 'Internal Server Error', error: err })
+            .status(500)
+        }
       }
+      return res.json({ data: errors.array() }).status(400)
     }
-    return res.json({ error: errors.array() }).status(400)
-  }
+    return res.json({ interface: checkErrors }).status(400)
+    }
+
 
   protected async save(
     req: Request,
     res: Response,
-    repo: Repository<T>,
-    list: unknown
+    repo: Repository<T>
   ): Promise<Response> {
     const errors = validationResult(req)
     if (errors.isEmpty()) {
@@ -63,9 +69,9 @@ export class DBPersistence<T extends ObjectLiteral> extends DBEntity {
         const item = await repo.findOne(condition)
         if (!item) return res.json({ error: `This id #${id} not exist!` }).status(404)
 
-        const data = plainToInstance(item, list) as unknown as QueryDeepPartialEntity<T>
+        const itemChanged = item.setData(req.body) as unknown as QueryDeepPartialEntity<T>
 
-        const update = await repo.update(id, data)
+        const update = await repo.update(id, itemChanged)
 
         return res.json(instanceToPlain(update)).status(201)
 
@@ -94,18 +100,6 @@ export class DBPersistence<T extends ObjectLiteral> extends DBEntity {
         .status(500)
     }
   }
-
-  protected async find(id: PK_Entity, repo: Repository<T>): Promise<T | null>
-  {
-    const condition = { where: { id: id } } as unknown as FindOneOptions<T>
-
-    // if (!item) res.json({ error: `This id #${id} not exist!` }).status(404)
-
-    return await repo.findOne(condition)
-  }
-
-
-
 
 }
 

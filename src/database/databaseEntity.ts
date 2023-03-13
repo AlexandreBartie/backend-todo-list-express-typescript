@@ -1,16 +1,36 @@
-import { PrimaryGeneratedColumn } from 'typeorm'
-import { param, ValidationChain } from 'express-validator'
+import { DBSchema } from './databaseSchema'
 
-export type PK_Entity = string
+export type DBRecord = Record<string, unknown>
+export type DBErrors = string[]
 
-export class DBEntity {
+export class DBEntity extends DBSchema {
+  //
+  // Check if all fields are present in 'data' parameter
+  //
+  check<T extends DBRecord>(data: T): DBErrors {
+    const errors: DBErrors = []
+    Object.keys(this).forEach((key) => {
+      if (!(key in data))
+        errors.push(`${key}: field not found!`)
+    })
 
-  @PrimaryGeneratedColumn('increment')
-  id: PK_Entity
+    Object.keys(data).forEach((key) => {
+      if (!(key in this))
+        errors.push(`${key}: field not exist!`)
+    })
 
+    return errors
+  }
+
+  //
+  // Set all values for each field present in 'data' parameter
+  //
+  setData<T extends DBRecord>(data: T): unknown {
+    Object.keys(data).forEach((key) => {
+      if (key in this && typeof data[key] !== 'undefined') {
+        this[key] = data[key]
+      }
+    })
+    return this
+  }
 }
-
-export const IdValidator: ValidationChain = param('id')
-  .trim()
-  .isInt()
-  .withMessage("The #id needs to be in #int format.")

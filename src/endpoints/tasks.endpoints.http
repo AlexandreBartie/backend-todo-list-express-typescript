@@ -2,27 +2,29 @@
 ### add task new
 POST http://localhost:3200/task
 Content-Type: application/json
-
 {
-    "title": "Festa Incrivel",
-    "date": "2023-08-27",
-    "description":"Show",
+    "title": "Maximus Sweet",
+    "date": "2022-11-23",
+    "description":"Too much",
     "priority": "high",
     "status":"todo"
+
 }
 
 ### get task by Id
 GET http://localhost:3200/task/28
 
 Content-Type: application/json
-### save task title
-PUT http://localhost:3200/task/title/28
+### save task data
+PUT http://localhost:3200/task/28
 Content-Type: application/json
 {
-    "title": "New Party"
+    "title": "My Party",
+    "date": "2022-06-05",
+    "description":"Yeah Supper Show"
 }
 ### save task status
-PUT http://localhost:3200/task/status/25
+PUT http://localhost:3200/task/25
 Content-Type: application/json
 {
     "status": "done"

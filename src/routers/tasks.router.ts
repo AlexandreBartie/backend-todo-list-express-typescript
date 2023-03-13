@@ -1,16 +1,15 @@
 import { Router } from 'express'
 import { taskController } from '../controllers/tasks.controller'
-import { taskAddValidator, taskGetValidator, taskSaveStatusValidator, taskSaveTitleValidator } from '../schema/tasks.schema'
+import { taskDataCheck, taskGetCheck } from '../schema/tasks.schema'
 
 export const tasksRouter: Router = Router()
 
 console.log('adding routers ...')
 
-tasksRouter.post('/task', taskAddValidator, taskController.add)
+tasksRouter.post('/task', taskDataCheck, taskController.add)
 
-tasksRouter.get('/task/:id', taskGetValidator, taskController.get)
+tasksRouter.get('/task/:id', taskGetCheck, taskController.get)
 
-tasksRouter.put('/task/title/:id', taskSaveTitleValidator, taskController.saveTitle)
-tasksRouter.put('/task/status/:id', taskSaveStatusValidator, taskController.saveStatus)
+tasksRouter.put('/task/:id', taskDataCheck, taskController.save)
 
 tasksRouter.get('/tasks', taskController.getAll)
