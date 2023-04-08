@@ -11,7 +11,7 @@
     "test:watch": "jest --watch",
     "dockerUP": "docker-compose up -d",
     "dockerDOWN": "docker-compose down",
-    "dockerMySQL": "docker exec -it todo-app mysql -u user -p",
+    "dockerMySQL": "docker exec -it todo-api mysql -u user -p",
     "dockerList": "docker ps -a",
     "process3200": "netstat -ano | findstr :3200",
     "Kill3200": "taskkill /F /PID put-PID-here"

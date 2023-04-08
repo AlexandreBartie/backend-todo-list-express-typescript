@@ -27,6 +27,8 @@ app.use(cors())
 // Define server port
 const port = process.env.PORT
 
+console.log(`Port: ${port}`)
+
 //
 // Listen the request on the defined port
 AppDataSource.initialize()

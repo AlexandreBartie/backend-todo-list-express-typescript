@@ -3,11 +3,11 @@
 POST http://localhost:3200/task
 Content-Type: application/json
 {
-    "title": "Maximus Sweet",
-    "date": "2022-11-23",
-    "description":"Too much",
-    "priority": "high",
-    "status":"todo"
+    "title": "Party #1",
+    "date": "2023-06-05",
+    "description":"It is my birthday",
+    "priority": "normal",
+    "status":"doing"
 
 }
 

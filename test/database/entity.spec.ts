@@ -3,12 +3,12 @@ import { describe, expect, test } from '@jest/globals'
 
 describe('Database', () => {
   test('TaskDB', async () => {
-    // const task = new TaskDTO()
+   //  const task = new TaskDTO()
 
-     // const item = await task.get('10')
+   //   const item = await task.('10')
 
-  //   if (item) {
-  //     console.log(task.title)
+   //   if (item) {
+   //     console.log(task.title)
 
   //     expect(task.title).toBe('oi')
   //   } else {
